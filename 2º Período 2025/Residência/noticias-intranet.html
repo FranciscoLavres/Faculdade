@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>News Dashboard — SEMDE Intranet</title>
+
+  <style>
+    :root {
+      --blue: #005C8B;
+      --green: #00A859;
+      --yellow: #FFDD21;
+      --white: #FFFFFF;
+      --muted-bg: #F4F6F8;
+      --text: #14323b;
+      --shadow: 0 6px 18px rgba(8, 25, 31, 0.1);
+      --radius: 10px;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: var(--muted-bg);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 20px;
+    }
+
+    /* Cabeçalho */
+    header {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: var(--radius);
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: var(--white) center/contain no-repeat url('https://www.aracaju.se.gov.br/images/brasao-aracaju.png'); /* <-- Trocar logo aqui */
+      border-radius: 8px;
+      margin-right: 12px;
+    }
+
+    main {
+      background: #fff;
+      padding: 16px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    /* Banner */
+    .banner-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      height: 240px;
+      margin-bottom: 16px;
+    }
+
+    .banners {
+      display: flex;
+      transition: transform .5s ease;
+    }
+
+    .banner {
+      flex: 0 0 100%;
+      color: #fff;
+      padding: 20px;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+    }
+
+   /* Banners institucionais */
+.banner-1 {
+  background-image: url('https://aracaju.se.gov.br/wp-content/uploads/2023/08/fachada-semede.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.banner-2 {
+  background-image: url('https://aracaju.se.gov.br/wp-content/uploads/2023/11/reuniao-semede.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.banner-3 {
+  background-image: url('https://aracaju.se.gov.br/wp-content/uploads/2024/01/projeto-semede.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.66);
+}
+
+.banner-4 {
+  background-image: url('https://aracaju.se.gov.br/wp-content/uploads/2024/03/equipe-semede.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+
+    .banner-content {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 12px;
+      max-width: 60%;
+    }
+
+    .banner-content h2 {
+      margin: 0 0 8px;
+    }
+
+    .banner-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .banner-controls button {
+      background: rgba(255, 255, 255, 0.7);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .indicators {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+
+    .indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+    }
+
+    .indicator.active {
+      background: #fff;
+    }
+
+    /* Grid de notícias */
+    .news-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .news-card {
+      background: #fff;
+      padding: 12px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .news-thumb {
+      width: 80px;
+      height: 80px;
+      background: var(--green);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    /* Painéis laterais */
+    aside {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .panel {
+      background: #fff;
+      padding: 12px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel h4 {
+      margin-top: 0;
+      color: var(--blue);
+    }
+
+    /* Formulário admin */
+    .btn {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      background: var(--green);
+      cursor: pointer;
+    }
+
+    .admin-form input,
+    .admin-form textarea,
+    .admin-form select {
+      width: 100%;
+      padding: 8px;
+      margin: 4px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    /* Responsividade */
+    @media (max-width: 800px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <!-- Cabeçalho -->
+    <header>
+      <div class="logo" aria-label="Brasão Prefeitura de Aracaju"></div>
+      <div>
+        <h1>SEMDE — Notícias Intranet</h1>
+        <p>Secretaria Municipal do Desenvolvimento Econômico</p>
+      </div>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main>
+
+      <!-- Banner rotativo -->
+      <section class="banner-wrap">
+        <div class="banners" id="banners">
+          <div class="banner banner-1">
+            <div class="banner-content">
+              <h2>Secretaria inaugura nova sede</h2>
+              <p>Estrutura moderna para atendimento e serviços.</p>
+            </div>
+          </div>
+
+          <div class="banner banner-2">
+            <div class="banner-content">
+              <h2>SEMDE promove encontro com empreendedores</h2>
+              <p>Debates sobre inovação e tecnologia.</p>
+            </div>
+          </div>
+
+          <div class="banner banner-3">
+            <div class="banner-content">
+              <h2>Parceria pública para geração de empregos</h2>
+              <p>Evento com nova empresa instalada gera mais de mil vagas.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="banner-controls">
+          <button onclick="prevBanner()">❮</button>
+          <button onclick="nextBanner()">❯</button>
+        </div>
+
+        <div class="indicators" id="indicators"></div>
+      </section>
+
+      <!-- Últimas notícias -->
+      <section>
+        <h2>Últimas Notícias</h2>
+        <div class="news-grid" id="newsGrid"></div>
+      </section>
+
+      <!-- Painel Admin -->
+      <section class="panel admin-form">
+        <h4>Painel Admin — Gerenciar Notícias</h4>
+        <input type="text" id="newsTitle" placeholder="Título" />
+        <textarea id="newsSummary" rows="3" placeholder="Resumo"></textarea>
+        <select id="newsType">
+          <option value="Comunicado">Comunicado</option>
+          <option value="Evento">Evento</option>
+          <option value="Parceria">Parceria</option>
+        </select>
+        <button class="btn" onclick="addNews()">Adicionar/Atualizar</button>
+      </section>
+
+    </main>
+
+    <!-- Barra lateral -->
+    <aside>
+      <div class="panel">
+        <h4>Destaques Recentes</h4>
+        <p><?php echo "Últimas estatísticas: movimento +44 % de empregabilidade em junho."; ?></p>
+      </div>
+
+      <div class="panel">
+        <h4>Contato</h4>
+        <p>
+          Telefone: (79) 3142-1721<br>
+          E-mail: <a href="mailto:semde@aracaju.se.gov.br">semde@aracaju.se.gov.br</a>
+        </p>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const banners = document.getElementById('banners'),
+      indicators = document.getElementById('indicators');
+    let idx = 0,
+      count = banners.children.length;
+
+    function renderIndicators() {
+      indicators.innerHTML = '';
+      for (let i = 0; i < count; i++) {
+        let d = document.createElement('div');
+        d.className = 'indicator' + (i === idx ? ' active' : '');
+        d.onclick = () => { idx = i; updateBanner(); };
+        indicators.append(d);
+      }
+    }
+
+    function updateBanner() {
+      banners.style.transform = `translateX(-${idx * 100}%)`;
+      renderIndicators();
+    }
+
+    function prevBanner() {
+      idx = (idx - 1 + count) % count;
+      updateBanner();
+    }
+
+    function nextBanner() {
+      idx = (idx + 1) % count;
+      updateBanner();
+    }
+
+    renderIndicators();
+
+    // Notícias
+    const grid = document.getElementById('newsGrid'),
+      storageKey = 'intranetNews';
+    let newsList = JSON.parse(localStorage.getItem(storageKey) || '[]');
+
+    function renderNews() {
+      grid.innerHTML = '';
+      newsList.forEach((n, i) => {
+        let c = document.createElement('div');
+        c.className = 'news-card';
+        c.innerHTML = `
+          <div class="news-thumb">${n.type}</div>
+          <div>
+            <h3>${n.title}</h3>
+            <p>${n.summary}</p>
+            <button onclick="editNews(${i})">Editar</button>
+            <button onclick="delNews(${i})">Excluir</button>
+          </div>`;
+        grid.append(c);
+      });
+    }
+
+    function addNews() {
+      const t = document.getElementById('newsTitle').value,
+        s = document.getElementById('newsSummary').value,
+        y = document.getElementById('newsType').value;
+
+      if (!t || !s) return alert('Título e resumo são obrigatórios.');
+
+      if (grid.editIndex != null) {
+        newsList[grid.editIndex] = { title: t, summary: s, type: y };
+        grid.editIndex = null;
+      } else {
+        newsList.push({ title: t, summary: s, type: y });
+      }
+
+      localStorage.setItem(storageKey, JSON.stringify(newsList));
+      renderNews();
+
+      document.getElementById('newsTitle').value = '';
+      document.getElementById('newsSummary').value = '';
+    }
+
+    function editNews(i) {
+      document.getElementById('newsTitle').value = newsList[i].title;
+      document.getElementById('newsSummary').value = newsList[i].summary;
+      document.getElementById('newsType').value = newsList[i].type;
+      grid.editIndex = i;
+    }
+
+    function delNews(i) {
+      if (confirm('Excluir notícia?')) {
+        newsList.splice(i, 1);
+        localStorage.setItem(storageKey, JSON.stringify(newsList));
+        renderNews();
+      }
+    }
+
+    window.onload = renderNews;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>News Dashboard — SEMDE Intranet</title>
+
+  <style>
+    /* ==== Variáveis Globais ==== */
+    :root {
+      --blue: #005C8B;
+      --green: #00A859;
+      --yellow: #FFDD21;
+      --white: #FFFFFF;
+      --muted-bg: #F4F6F8;
+      --text: #14323b;
+      --shadow: 0 6px 18px rgba(8, 25, 31, 0.1);
+      --radius: 10px;
+      font-family: "Inter", sans-serif;
+    }
+
+    /* ==== Reset e Layout Base ==== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: var(--muted-bg);
+      color: var(--text);
+      padding-bottom: 70px; /* espaço para a hotbar fixa */
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    /* ==== Cabeçalho ==== */
+    header {
+      grid-column: 1 / -1;
+      background: var(--blue);
+      color: var(--white);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+    }
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: var(--white) center/contain no-repeat url('https://www.aracaju.se.gov.br/images/brasao-aracaju.png');
+      border-radius: 8px;
+    }
+
+    /* ==== Banner Rotativo ==== */
+    .banner-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      height: 240px;
+      margin-bottom: 16px;
+      background: #000;
+    }
+    .banners {
+      display: flex;
+      transition: transform .5s ease;
+    }
+    .banner {
+      flex: 0 0 100%;
+      color: var(--white);
+      position: relative;
+      padding: 20px;
+      background-size: cover;
+      background-position: center;
+    }
+    .banner-content {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 12px;
+      border-radius: var(--radius);
+      max-width: 60%;
+    }
+    .banner-controls button,
+    .indicator {
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+    .banner-controls {
+      display: flex;
+      justify-content: space-between;
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0 10px;
+    }
+    .banner-controls button {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: background .3s;
+    }
+    .banner-controls button:hover {
+      background: var(--yellow);
+    }
+    .indicators {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      padding: 0;
+    }
+    .indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      transition: background .3s;
+    }
+    .indicator.active {
+      background: var(--white);
+    }
+
+    /* ==== Grid de Notícias ==== */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .news-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      padding: 12px;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .news-thumb {
+      min-width: 80px;
+      min-height: 80px;
+      background: var(--green);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    /* ==== Painéis Laterais ==== */
+    aside {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .panel {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 12px;
+    }
+    .panel h4 {
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    /* ==== Hotbar ==== */
+    .hotbar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 1100px;
+      background: var(--blue);
+      border-radius: 10px 10px 0 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+    .hotbar a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: transform .2s;
+    }
+    .hotbar a:hover { transform: translateY(-2px); }
+    .hotbar-icon { font-size: 20px; }
+
+    /* ==== Responsividade ==== */
+    @media (max-width: 800px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body id="top">
+  <div class="container">
+    <!-- Cabeçalho -->
+    <header>
+      <div class="logo" aria-label="Brasão da Prefeitura de Aracaju"></div>
+      <div>
+        <h1>SEMDE — Notícias Intranet</h1>
+        <p>Secretaria Municipal do Desenvolvimento Econômico</p>
+      </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main>
+      <!-- Banner Rotativo -->
+      <section class="banner-wrap">
+        <div class="banners" id="banners">
+          <div class="banner banner-1">
+            <div class="banner-content">
+              <h2>Secretaria inaugura nova sede</h2>
+              <p>Estrutura moderna para atendimento e serviços.</p>
+            </div>
+          </div>
+          <div class="banner banner-2">
+            <div class="banner-content">
+              <h2>SEMDE promove encontro com empreendedores</h2>
+              <p>Debates sobre inovação e tecnologia.</p>
+            </div>
+          </div>
+          <div class="banner banner-3">
+            <div class="banner-content">
+              <h2>Parceria pública para geração de empregos</h2>
+              <p>Nova empresa instalada gera mais de mil vagas.</p>
+            </div>
+          </div>
+        </div>
+        <div class="banner-controls">
+          <button onclick="prevBanner()">❮</button>
+          <button onclick="nextBanner()">❯</button>
+        </div>
+        <div class="indicators" id="indicators"></div>
+      </section>
+
+      <!-- Grid de Notícias -->
+      <section>
+        <h2>Notícias Recentes</h2>
+        <div class="news-grid" id="newsGrid">
+          <!-- Cards serão renderizados pelo script JS -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Painel Lateral -->
+    <aside>
+      <div class="panel">
+        <h4>Destaques Recentes</h4>
+        <p>Últimas estatísticas: movimentação teve +44% de empregabilidade em junho.</p>
+      </div>
+     
+
+  <!-- Hotbar -->
+  <nav class="hotbar">
+    <a href="#top"><span class="hotbar-icon">🏠</span>Início</a>
+    <a href="#banners"><span class="hotbar-icon">📰</span>Destaques</a>
+    <a href="#newsGrid"><span class="hotbar-icon">🗂️</span>Notícias</a>
+     <a href="Filtro"><span class="hotbar-icon">🔍</span>Filtro</a>
+    <a href="mailto:semde@aracaju.se.gov.br"><span class="hotbar-icon">📧</span>Contato</a>
+  </nav>
+
+  <!-- Scripts -->
+  <script>
+    /* ===== Banner Rotativo ===== */
+    const banners = document.getElementById('banners');
+    const indicators = document.getElementById('indicators');
+    let idx = 0;
+    const count = banners.children.length;
+
+    function updateBanner() {
+      banners.style.transform = `translateX(-${idx * 100}%)`;
+      document.querySelectorAll('.indicator').forEach((el, i) =>
+        el.classList.toggle('active', i === idx)
+      );
+    }
+
+    function renderIndicators() {
+      indicators.innerHTML = '';
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('div');
+        dot.className = i === idx ? 'indicator active' : 'indicator';
+        dot.addEventListener('click', () => { idx = i; updateBanner(); });
+        indicators.appendChild(dot);
+      }
+    }
+
+    function prevBanner() {
+      idx = (idx - 1 + count) % count;
+      updateBanner();
+    }
+
+    function nextBanner() {
+      idx = (idx + 1) % count;
+      updateBanner();
+    }
+
+    renderIndicators();
+
+    /* ===== Notícias Dinâmicas ===== */
+    const storageKey = 'intranetNews';
+    let newsList = JSON.parse(localStorage.getItem(storageKey) || '[]');
+
+    function renderNews() {
+      const grid = document.getElementById('newsGrid');
+      grid.innerHTML = '';
+      newsList.forEach((n, i) => {
+        const card = document.createElement('div');
+        card.className = 'news-card';
+        card.innerHTML = `
+          <div class="news-thumb">${n.type}</div>
+          <div>
+            <h3>${n.title}</h3>
+            <p>${n.summary}</p>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    window.addEventListener('load', () => {
+      updateBanner();
+      renderNews();
+    });
+  </script>
+
+</body>
+</html>

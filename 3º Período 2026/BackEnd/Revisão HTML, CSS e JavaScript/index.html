@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel - Aracaju</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <header>    
+        <nav>
+            <ul>
+                <li><button>HOME</button></li>
+                <li><button>PROMOÇÕES</button></li>
+                <li><button>PERFIL</button></li>
+            </ul>
+        </nav>
+
+        <div class="cabecalho">
+            <h1>Hotel Da Orla - Orla de Atalaia, Aracaju, SE, Brasil</h1>
+            <h3>&#9733 4.8 - Hotel</h3>
+        </div>
+
+    </header>
+
+    <main>
+        <section class="primeiro">
+            <div class="itens">
+                <h2>Itens dos quartos</h2>
+                <ul type="circle">
+                    <li>Ar-condicionado para manter o ambiente agradável</li>
+                    <li>Wi-Fi gratuito para conexão durante toda a estadia</li>
+                    <li>TV de tela plana com canais via satélite</li>
+                    <li>Terraço ou varanda em algumas unidades</li>
+                    <li>Banheiro privativo com chuveiro e produtos de higiene</li>
+                    <li>Algumas acomodações podem oferecer vista para o mar</li>
+                    <li>Serviço de limpeza e recepção disponível 24 h</li>
+                </ul>
+            </div>
+            <div class="turismo">
+                <h2>Pontos de interesse</h2>
+                <ol>
+                    <li>Passarela do Caranguejo - corredor gastronômico famoso com bares e restaurantes à beira-mar.</li>
+                    <li>Arcos da Orla de Atalaia - cartão-postal da cidade e local popular para fotos.</li>
+                    <li>Monumento aos Formadores de Nacionalidade - ponto histórico na orla.</li>
+                    <li>Praia de Atalaia - extensa faixa de areia urbana com estrutura de lazer.</li>
+                    <li>Feira do Turista - espaço com artesanato, comidas típicas e cultura local.</li>
+                    <li>Oceanário de Aracaju / Projeto TAMAR - aquário e centro de conservação <br>
+                        marinha (caminhada ou curto trajeto de carro).</li>
+                    <li>Bares, restaurantes e vida noturna ao longo da avenida da praia.</li>
+                </ol>
+            </div>
+        </section>
+
+        <article>
+            <div class="tabela">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th colspan="5">Tabela de Preços por Pessoa</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td rowspan="5">Valores em R$</td>
+                            <th>Diárias</th>
+                            <th>Padrão</th>
+                            <th>Luxo</th>
+                            <th>Presidencial</th>
+                        </tr>
+
+                        <tr>
+                            <td>1</td>
+                            <td>100</td>
+                            <td>150</td>
+                            <td>200</td>
+                        </tr>
+
+                        <tr>
+                            <td>2</td>
+                            <td>190</td>
+                            <td>280</td>
+                            <td>370</td>
+                        </tr>
+
+                        <tr>
+                            <td>3</td>
+                            <td>270</td>
+                            <td>400</td>
+                            <td>500</td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">Para mais diárias consulte a recepção</th>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </article>
+
+        <section class="segundo">
+            <h2>Formulário de Cliente</h2>
+
+            <form name="formulario">
+                <label for="nome">Insira seu nome completo: </label>
+                <input type="text" placeholder="Nome" name="nome" id="nome">
+
+                <label for="sexo">Escolha seu sexo: </label>
+                <select name="sexo" id="sexo">
+                        <option value=""></option>
+                        <option value="masculino">Masculino</option>
+                        <option value="feminino">Feminino</option>
+                        <option value="nao-informado">Prefiro não informar</option>
+                </select>
+
+                <label for="email">Seu email: </label>
+                <input type="email" name="email" id="email">
+
+                <label for="data">Data de chegada: </label>
+                <input type="date" name="data" id="data">
+
+                <label for="noites">Número de noites: </label>
+                <input type="number" name="noites" id="noites">
+
+                <label for="hospedes">Número de Hóspedes: </label>
+                <select name="hospedes" id="hospedes">
+                        <option value=""></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6+">6+</option>
+                </select>
+
+                <label for="observacao">Alguma observação? </label>
+                <textarea name="observacao" id="observacao"></textarea>
+
+            </form>
+
+                <button type="button" onclick="validar()" id="enviar">Enviar</button>
+
+        </section>
+    </main>
+
+    <footer>    
+
+    </footer>
+</body>
+</html>

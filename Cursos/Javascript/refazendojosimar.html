@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refazendo Josimar</title>
+    <style>
+        body{
+            background-color: chartreuse;
+            color: aliceblue;
+        }
+
+        .resultado{
+            color: blue;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 40px;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="nota1" value="">
+    <input type="text" id="nota2" value="">
+    <button id="btn">Calcular</button>
+
+    <h1>Média: </h1>
+    <div class="resultado" id="result"></div>
+
+<script>
+    var nota1 = document.getElementById('nota1')
+    var nota2 = document.getElementById('nota2')
+    var result = document.getElementById('result')
+    var btn = document.getElementById('btn')
+
+        btn.addEventListener("click", function() {
+            if(nota1.value != "" && nota2.value != ""){
+                var r = (parseFloat(nota1.value) + parseFloat(nota2.value)) / 2
+                
+                if(r >= 6){
+                    result.textContent = ('Parabéns!!! O aluno tirou '+r+' de média e foi aprovado!!!')
+                }
+
+                else{
+                    result.textContent = ('Infelizmente o aluno tirou '+r+' de média e foi reprovado XXX')
+                }
+            }
+
+            else{
+                result.textContent = ('Preencha os campos')
+            }
+        }
+        )
+</script>
+</body>
+</html>

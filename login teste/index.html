@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+            --cor-de-fundo: #005C8B;
+            --cor-base: #feffe3;
+            --cor-botao: #ff9e30;
+            --cor-botaoh: #feffe3;
+            --cor-botaoa: #ff8800;
+        }
+
+        body {
+            background-color: var(--cor-de-fundo);
+        }
+
+        .botao1 {
+            background-color: var(--cor-botao);
+            padding: 10px 20px;
+            color: var(--cor-base);
+            border: 2px var(--cor-botaoh);
+        }
+
+        .botao:hover {
+            background-color: var(--cor-botaoh);
+            transform: scale(1.1);
+            transition: 1000ms;
+        }
+
+        .botao:active {
+            background-color: var(--cor-botaoa);
+        }
+
+        .botao {
+            display: inline-block;
+            /* Permite que o botão se ajuste ao texto e permite margens */
+            padding: 10px 20px;
+            /* Espaçamento interno (top/bottom e left/right) */
+            background-color: var(--cor-botao);
+            /* Cor de fundo */
+            color: white;
+            /* Cor do texto */
+            border: none;
+            /* Remove a borda padrão */
+            border-radius: 5px;
+            /* Cantos arredondados */
+            cursor: pointer;
+            /* Altera o cursor ao passar o mouse */
+            font-size: 16px;
+            /* Tamanho da fonte */
+            text-align: center;
+            /* Alinha o texto ao centro (se houver mais de uma linha) */
+            line-height: 1.5;
+            /* Espaçamento entre linhas para melhor legibilidade */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="" class="botao1">teste</a>
+        <a href="" class="botao">teste</a>
+    </header>
+
+</body>
+
+</html>
