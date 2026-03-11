@@ -9,7 +9,7 @@ lista = num.replace(",", "").split()
 listaPos = [int(i) for i in lista]
 
 for i in listaPos:
-    if i < 0:
+    if listaPos[i] < 0:
         listaPos.remove(i)
 
 print(listaPos)
