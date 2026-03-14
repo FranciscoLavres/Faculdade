@@ -15,6 +15,9 @@ public class segunda {
         do {
             System.out.println("Digite o segundo número: ");
             num2 = input.nextDouble();
+            if (num2 == 0){
+                System.out.println("O segundo valor deve ser diferente de zero.");
+            }
         } while (num2 == 0);
 
         double divisao = (num1/num2);
