@@ -2,7 +2,7 @@ import java.lang.Math;
 import java.util.Random;
 
 
-public class raizQuadrada {
+public class RaizQuadrada {
     public static void main(String[] arg) {
 
         Random num1 = new Random();
