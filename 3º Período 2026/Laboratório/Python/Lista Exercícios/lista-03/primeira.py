@@ -4,10 +4,19 @@ quantidade de vogais encontradas. Na main, peça uma frase ao usuário e exiba o
 
 '''
 
-def contar_vogais(frase):
-    lista_letras = frase.strip().split()
+def contarVogais(frase):
+
+    vogais = "aeiouAEIOU"
+    contador = 0
+
+    for letra in frase:
+        if letra in vogais:
+            contador += 1
+
+    print(f"Quantidade de vogais: {contador}")
 
 
+def main():
+    contarVogais(input("Digite uma frase: "))
 
-
-contar_vogais(input("Digite algo: "))
+main()
